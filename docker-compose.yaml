@@ -1,0 +1,11 @@
+services:
+  mysql:
+    container_name: 'doro-tech-mysql'
+    image: 'mysql:latest'
+    environment:
+      MYSQL_DATABASE: doro_tech
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: 123
+    ports:
+      - '3307:3306'
