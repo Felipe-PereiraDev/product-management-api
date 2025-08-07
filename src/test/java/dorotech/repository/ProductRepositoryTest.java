@@ -21,6 +21,11 @@ class ProductRepositoryTest extends AbstractIntegrationTest {
     @Autowired
     private ProductRepository repository;
 
+    @BeforeEach
+    void cleanUp() {
+        repository.deleteAll();
+    }
+
     @DisplayName("test Given Product Object When Save Then Return Saved Product")
     @Test
     void testGivenProductObject_WhenSave_ThenReturnSavedProduct() {
