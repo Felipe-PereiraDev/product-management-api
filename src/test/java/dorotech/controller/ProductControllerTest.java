@@ -148,7 +148,7 @@ public class ProductControllerTest {
 
     @DisplayName("update Product By Id when Id Exists should Return Updated Product Response")
     @Test
-    void updateProductById_whenIdExists_shouldReturnUpdatedProductResponse() throws Exception {
+    void updateProductById_whenIdExists_shouldReturnUpdatedProductResponse() throws Exception       {
         // given
         long productId = 1L;
         ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO(

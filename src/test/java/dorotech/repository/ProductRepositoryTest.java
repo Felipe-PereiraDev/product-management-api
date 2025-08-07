@@ -1,9 +1,11 @@
 package dorotech.repository;
 
 import dorotech.domain.Product;
+import dorotech.integrationtests.testcontainers.AbstractIntegrationTest;
 import dorotech.mocks.ProductMock;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -13,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @ActiveProfiles("test")
-class ProductRepositoryTest {
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+class ProductRepositoryTest extends AbstractIntegrationTest {
 
     @Autowired
     private ProductRepository repository;

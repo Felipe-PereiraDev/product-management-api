@@ -4,6 +4,7 @@ import dorotech.domain.Product;
 import dorotech.dto.ProductRequest;
 import dorotech.dto.ProductResponse;
 import dorotech.dto.ProductUpdateDTO;
+import dorotech.exceptions.exception.EntityExistsException;
 import dorotech.exceptions.exception.EntityNotFoundException;
 import dorotech.mocks.ProductMock;
 import dorotech.repository.ProductRepository;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +63,26 @@ class ProductServiceTest {
         assertEquals(expectedDescription, result.description());
         assertEquals(expectedPrice, result.price());
         assertEquals(expectedAmount, result.amount());
+        verify(productRepository, times(1)).save(any(Product.class));
+    }
+
+    @DisplayName("Test Create When Name Already Exists Should Throw Return Entity Exists Exception")
+    @Test
+    void create_whenNameAlreadyExists_ShouldThrowEntityExistsException() {
+        // Arrange
+        ProductRequest productRequest = new ProductRequest(
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getAmount()
+        );
+        when(productRepository.save(any(Product.class))).thenThrow(DataIntegrityViolationException.class);
+
+        // Act
+
+        // Assert
+        assertThrowsExactly(EntityExistsException.class,
+                () -> productService.create(productRequest));
         verify(productRepository, times(1)).save(any(Product.class));
     }
 
